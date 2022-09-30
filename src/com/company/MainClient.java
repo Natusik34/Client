@@ -11,7 +11,7 @@ public class MainClient {
     private static BufferedWriter out; //запись в сокет
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);//для того чтобы пользователь мог вводить какие-либо данные
+        //Scanner scanner = new Scanner(System.in);//для того чтобы пользователь мог вводить какие-либо данные
         try{
             try {
                 socket = new Socket("localhost", 4004);//запрашиваем у сервера строку на соединение
@@ -19,13 +19,17 @@ public class MainClient {
                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));//чтение сообщения
                 out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));//пишем сообщение
 
-                System.out.println("Enter the expression");
-                String word = scanner.nextLine(); //ждем ответа клиента
+                //System.out.println("Enter the expression");
+                //String word = scanner.nextLine(); //ждем ответа клиента
+                String word = in.readLine();
+                System.out.println(word);
+                word = "Hello";
                 out.write(word + "\n"); //отправление сообщения на сервер
                 out.flush();
                 String serverWord = in.readLine(); // ждём ответа сервера
                 System.out.println(serverWord); // получаем ответ
-            } finally { //закрываем потоки
+            }
+            finally { //закрываем потоки
                 socket.close();
                 in.close();
                 out.close();
